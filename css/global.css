@@ -3,8 +3,32 @@ body{
     padding: 0;
 }
 
+#jugar{
+    margin: auto;
+}
+
+#yesButton{
+    display: none;
+    margin: 1em;
+}
+
+#noButton{
+    display: none;
+    margin: 1em;
+}
 main{
     text-align: center;
+}
+
+.tablero{
+    background-color: rgb(67, 194, 67);
+    width: 30%;
+    margin: auto;
+    height: 30em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .saldo-container{

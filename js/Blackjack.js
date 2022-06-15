@@ -156,7 +156,7 @@ class Mazo{
 
     mostrarMazo(){
         for(let i = 0; i < this.cartas.length; i++){
-            return this.cartas[i].mostrarCarta();
+            console.log(this.cartas[i].mostrarCarta());
         }
     }
 
@@ -249,79 +249,118 @@ class Croupier{
 }
 
 //instancio mazo y jugadores
+let manosJugadas = 0;
 let mazo = new Mazo();
 mazo.barajarMazo();
 let jugador = new Jugador('Julito');
 let croupier = new Croupier();
 let manoC = document.getElementById('manoC');
 let manoJ = document.getElementById('manoJ');
+let result = document.getElementById('result');
+let saldo = document.getElementById('saldo');
+saldo.innerHTML = jugador.mostrarSaldo();
+yesButton = document.getElementById('yesButton');
+noButton = document.getElementById('noButton');
+jugarButton = document.getElementById('jugar');
+let apuesta = 1000;
 
-while(eleccion = prompt("¿Qué quieres hacer? \n 1. Jugar \n 2. Salir \n" + jugador.mostrarSaldo()) == 1){
-    //reparto cartas iniciales
-    let apuesta = parseInt(prompt("¿Cuánto quieres apostar?"));
-    jugador.apostar(apuesta);
-    croupier.recibirCarta(mazo.sacarCarta());
-    jugador.recibirCarta(mazo.sacarCarta());
-    jugador.recibirCarta(mazo.sacarCarta());
-    console.log(jugador.mostrarMano());
-    console.log(jugador.sumarValorMano());
-    console.log(croupier.mostrarMano());
-    manoC.innerHTML = croupier.mostrarMano()+ 'el valor de la mano es: ' + croupier.sumarValorMano();
-    manoJ.innerHTML = jugador.mostrarMano() + ' el valor de la mano es: ' + jugador.sumarValorMano();
-    
-    
-    // juega el jugador
-    while(tomar = prompt("Desea tomar otra carta? (s/n)") == "s"){
-        jugador.recibirCarta(mazo.sacarCarta());
-        console.log(jugador.mostrarMano());
-        console.log(jugador.sumarValorMano());
-        if(jugador.sumarValorMano() > 21){
-            alert('Has superado los 21, perdiste');
-            tomar="n";
-            break;
-        }
+function repartir(){
+    console.log(mazo.mostrarMazo());
+    result.style.color = 'black';
+
+    if(manosJugadas > 6){
+        mazo = new Mazo();
+        mazo.barajarMazo();
+        manosJugadas = 0;
     }
+    manosJugadas++;
     
-    //juega el croupier
-    while(croupier.sumarValorMano() < 17 || croupier.sumarValorMano() > 21){
+    
+    
+    jugador.eliminarMano();
+    croupier.eliminarMano();
+    jugarButton.style.display = 'none';
+    
+    if(jugador.saldo >= apuesta){
+        manoC.innerHTML = "";
+        manoJ.innerHTML = "";
+        jugador.apostar(apuesta);
+        saldo.innerHTML = jugador.mostrarSaldo();
         croupier.recibirCarta(mazo.sacarCarta());
-        console.log(croupier.mostrarMano());
-        console.log(croupier.sumarValorMano());
+        jugador.recibirCarta(mazo.sacarCarta());
+        jugador.recibirCarta(mazo.sacarCarta());
+
+        manoC.innerHTML = croupier.mostrarMano()+ 'el valor de la mano es: ' + croupier.sumarValorMano();
+        manoJ.innerHTML = jugador.mostrarMano() + ' el valor de la mano es: ' + jugador.sumarValorMano();
+        
+        result.innerHTML = "Desea otra carta?";
+        yesButton.style.display = 'inline-block';
+        noButton.style.display = 'inline-block';
+    }else{
+        result.innerHTML = "No tiene saldo suficiente para apostar";
+        jugarButton.style.display = 'block';
+    }
+}
+
+function tirarCarta(){
     
+    jugador.recibirCarta(mazo.sacarCarta());
+    manoJ.innerHTML = jugador.mostrarMano()+ 'el valor de la mano es: ' + jugador.sumarValorMano();
+    result.innerHTML = "Desea otra carta?";
+    yesButton.style.display = 'inline-block';
+    noButton.style.display = 'inline-block';
+    
+    if(jugador.sumarValorMano() > 21){
+        result.innerHTML = 'Has superado los 21, perdiste con una mano de: ' + jugador.sumarValorMano();
+        result.style.color = 'red';
+        jugarButton.style.display = 'block';
+        yesButton.style.display = 'none';
+        noButton.style.display = 'none';
+    }
+}
+
+function jugarCroupier(){
+    yesButton.style.display = 'none';
+    noButton.style.display = 'none';
+    while(croupier.sumarValorMano() < 17){
+        croupier.recibirCarta(mazo.sacarCarta());
+        manoC.innerHTML = croupier.mostrarMano()+ 'el valor de la mano es: ' + croupier.sumarValorMano();
+        
+        jugarButton.style.display = 'block';
         // el croupier se pasa y el jugador no
         if(croupier.sumarValorMano() > 21 && jugador.sumarValorMano() <= 21){
-            alert('El croupier ha superado los 21. Ganaste con ' + jugador.sumarValorMano());
+            result.style.color = 'green';
+            result.innerHTML = 'El croupier ha superado los 21. Ganaste con ' + jugador.sumarValorMano();
             jugador.ganar(apuesta);
             break;
         }
         // nadie se pasa y gana el croupier
         if(croupier.sumarValorMano() >= 17 && croupier.sumarValorMano() <= 21 && croupier.sumarValorMano() > jugador.sumarValorMano()){
-            alert('El croupier ha ganado con ' + croupier.sumarValorMano() + ', tu tenias ' + jugador.sumarValorMano());
+            result.style.color = 'red';
+            result.innerHTML = 'El croupier ha ganado con ' + croupier.sumarValorMano() + ', tu tenias ' + jugador.sumarValorMano();
             break;
         }
-    
+        
         //nadie se pasa y gana el jugador
         if(croupier.sumarValorMano() >= 17 && croupier.sumarValorMano() <= 21 && croupier.sumarValorMano() < jugador.sumarValorMano() && jugador.sumarValorMano() <= 21){
-            alert('El croupier tenia '+ croupier.sumarValorMano() +'. Ganaste con ' + jugador.sumarValorMano());
+            result.style.color = 'green';
+            result.innerHTML = 'El croupier tenia '+ croupier.sumarValorMano() +'. Ganaste con ' + jugador.sumarValorMano();
             jugador.ganar(apuesta);
             break;
         }
-    
+        
         //nadie se pasa y empatan
         if(croupier.sumarValorMano() >= 17 && croupier.sumarValorMano() <= 21 && croupier.sumarValorMano() == jugador.sumarValorMano()){
-            alert('tu tenias ' + jugador.sumarValorMano() + ' y el croupier tenia ' + croupier.sumarValorMano() + '. Empataron');
+            result.style.color = 'orange';
+            result.innerHTML = 'tu tenias ' + jugador.sumarValorMano() + ' y el croupier tenia ' + croupier.sumarValorMano() + '. Empataron';
             jugador.empatar(apuesta);
             break;
         }
     }
-
+    
     //limpio las manos de ambos jugadores
+    saldo.innerHTML = jugador.mostrarSaldo();
     jugador.eliminarMano();
     croupier.eliminarMano();
+    
 }
-
-alert("Has finalizado con un saldo de " + jugador.mostrarSaldo());
-
-
-
-

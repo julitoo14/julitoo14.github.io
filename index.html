@@ -13,17 +13,22 @@
             <ul class="navbar">
                 <li class="nav-link"><a href="">Home</a></li>
                 <li class="nav-link"><a href="">Juegos</a></li>
-                <div class="saldo-container"><p id="saldo">$2000</p></div>
+                <div class="saldo-container"><p></p></div>
                 <li class="nav-link"><a href="">Quienes Somos</a></li>
                 <li class="nav-link"><a href="">Mi cuenta</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <div>
-            <h1>Bienvenido al Casino</h1>
+        <div class="tablero">
+            <h1>Bienvenido al Blackjack</h1>
             <p id="manoC"></p>
             <p id="manoJ"></p>
+            <p id="result"></p>
+            <button id="jugar" onclick="repartir()">Jugar</button>
+            <button id="yesButton" onclick="tirarCarta()">Si</button>
+            <button id="noButton" onclick="jugarCroupier()">No</button>
+            <p id="saldo"></p>
         </div>
     </main>
 </body>
