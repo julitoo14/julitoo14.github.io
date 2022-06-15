@@ -1,0 +1,39 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+main{
+    text-align: center;
+}
+
+.saldo-container{
+    width: 70%;
+    text-align: center;
+    color: white;
+}
+
+#saldo{
+    font-size: 1.5em;
+}
+
+.navbar{
+    background-color: rgb(28, 38, 65);
+    display: flex;
+    margin: 0;
+    padding: 1em;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-link{
+    list-style: none;
+}
+
+.nav-link a{
+    color: white;
+    text-decoration: none;
+    padding: 0.5em;
+    margin: 0.5em;
+    font-size: 1.3em;
+}
