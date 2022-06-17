@@ -248,40 +248,24 @@ class Croupier{
     }
 }
 
-//instancio mazo y jugadores
-let manosJugadas = 0;
-let mazo = new Mazo();
-mazo.barajarMazo();
-let jugador = new Jugador('Julito');
-let croupier = new Croupier();
-let manoC = document.getElementById('manoC');
-let manoJ = document.getElementById('manoJ');
-let result = document.getElementById('result');
-let saldo = document.getElementById('saldo');
-saldo.innerHTML = jugador.mostrarSaldo();
-yesButton = document.getElementById('yesButton');
-noButton = document.getElementById('noButton');
-jugarButton = document.getElementById('jugar');
-let apuesta = 1000;
 
 function repartir(){
     console.log(mazo.mostrarMazo());
     result.style.color = 'black';
-
+    
     if(manosJugadas > 6){
         mazo = new Mazo();
         mazo.barajarMazo();
         manosJugadas = 0;
     }
     manosJugadas++;
-    
-    
-    
     jugador.eliminarMano();
     croupier.eliminarMano();
     jugarButton.style.display = 'none';
+    raiseBetButton.style.display = 'none';
+    lowBetButton.style.display = 'none';
     
-    if(jugador.saldo >= apuesta){
+    if(jugador.saldo >= apuesta && apuesta > 0){
         manoC.innerHTML = "";
         manoJ.innerHTML = "";
         jugador.apostar(apuesta);
@@ -297,8 +281,15 @@ function repartir(){
         yesButton.style.display = 'inline-block';
         noButton.style.display = 'inline-block';
     }else{
+        
         result.innerHTML = "No tiene saldo suficiente para apostar";
         jugarButton.style.display = 'block';
+        raiseBetButton.style.display = 'inline-block';
+        lowBetButton.style.display = 'inline-block';
+        if(apuesta==0){
+            result.innerHTML="No ha apostado";
+        }
+
     }
 }
 
@@ -314,6 +305,8 @@ function tirarCarta(){
         result.innerHTML = 'Has superado los 21, perdiste con una mano de: ' + jugador.sumarValorMano();
         result.style.color = 'red';
         jugarButton.style.display = 'block';
+        raiseBetButton.style.display = 'inline-block';
+        lowBetButton.style.display = 'inline-block';
         yesButton.style.display = 'none';
         noButton.style.display = 'none';
     }
@@ -327,6 +320,8 @@ function jugarCroupier(){
         manoC.innerHTML = croupier.mostrarMano()+ 'el valor de la mano es: ' + croupier.sumarValorMano();
         
         jugarButton.style.display = 'block';
+        raiseBetButton.style.display = 'inline-block';
+        lowBetButton.style.display = 'inline-block';
         // el croupier se pasa y el jugador no
         if(croupier.sumarValorMano() > 21 && jugador.sumarValorMano() <= 21){
             result.style.color = 'green';
@@ -364,3 +359,41 @@ function jugarCroupier(){
     croupier.eliminarMano();
     
 }
+
+function bajarApuesta(){
+    if (apuesta >= 100){
+        apuesta -= 100;
+        showBet.innerHTML = "apuesta: " + apuesta;
+        result.innerHTML = "";
+    }
+}
+
+function subirApuesta(){
+    if (apuesta < jugador.saldo){
+        apuesta += 100;
+        showBet.innerHTML = "apuesta: " + apuesta;
+        result.innerHTML = "";
+    }else{
+        result.innerHTML = "No tiene saldo suficiente para apostar";
+    }
+}
+
+//instancio mazo y jugadores
+let manosJugadas = 0;
+let mazo = new Mazo();
+mazo.barajarMazo();
+let jugador = new Jugador('Julito');
+let croupier = new Croupier();
+let manoC = document.getElementById('manoC');
+let manoJ = document.getElementById('manoJ');
+let result = document.getElementById('result');
+let saldo = document.getElementById('saldo');
+let yesButton = document.getElementById('yesButton');
+let noButton = document.getElementById('noButton');
+let jugarButton = document.getElementById('jugar');
+saldo.innerHTML = jugador.mostrarSaldo();
+let showBet = document.getElementById('bet');
+let apuesta = 100;
+let raiseBetButton = document.getElementById('raiseBet');
+let lowBetButton = document.getElementById('lowBet');
+showBet.innerHTML = "apuesta: " + apuesta;

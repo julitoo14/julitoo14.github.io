@@ -26,8 +26,15 @@
             <p id="manoJ"></p>
             <p id="result"></p>
             <button id="jugar" onclick="repartir()">Jugar</button>
-            <button id="yesButton" onclick="tirarCarta()">Si</button>
-            <button id="noButton" onclick="jugarCroupier()">No</button>
+            <div>
+                <button id="lowBet" onclick="bajarApuesta()">-</button>
+                <button id="raiseBet" onclick="subirApuesta()">+</button>
+            </div>
+            <div>
+                <button id="yesButton" onclick="tirarCarta()">Si</button>
+                <button id="noButton" onclick="jugarCroupier()">No</button>
+            </div>
+            <p id="bet"></p>
             <p id="saldo"></p>
         </div>
     </main>
