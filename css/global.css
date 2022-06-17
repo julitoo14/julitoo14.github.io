@@ -12,6 +12,17 @@ body{
     margin: 1em;
 }
 
+.mano{
+    display:flex;
+    flex-direction: row;
+
+}
+
+.carta{
+    width: 7em;
+    margin: 0.25em;
+}
+
 #noButton{
     display: none;
     margin: 1em;
@@ -22,11 +33,11 @@ main{
 
 .tablero{
     background-color: rgb(67, 194, 67);
-    width: 30%;
+    width: 100%;
     margin: auto;
-    height: 35em;
+    height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
 }

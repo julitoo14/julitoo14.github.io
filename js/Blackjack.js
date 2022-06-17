@@ -5,6 +5,7 @@ class Carta{
         this.numero = numero;
         this.palo = palo;
         this.valor = 0;
+        this.imagen = 'img/'+ numero + '-' + palo + '.png';
         this.convertirNumero(numero);
         this.convertirPalo(palo);
         this.convertirValor(this.numero);
@@ -13,10 +14,10 @@ class Carta{
     convertirPalo(palo){
         switch(palo){
             case 1:
-                this.palo = '♥';
+                this.palo = '♦';
                 break;
             case 2:
-                this.palo = '♦';
+                this.palo = '♥';
                 break;
             case 3:
                 this.palo = '♠';
@@ -116,7 +117,8 @@ class Carta{
     }
 
     mostrarCarta(){
-        return this.numero + ' de ' + this.palo;
+        //return this.numero + ' de ' + this.palo;
+        return this.imagen;
     }
 
     mostrarValor(){
@@ -193,9 +195,9 @@ class Jugador{
     }
 
     mostrarMano(){
-        let msg = "Mano de " + this.nombre + ": <br>";
+        let msg = "";
         for(let i = 0; i < this.mano.length; i++){
-            msg += this.mano[i].mostrarCarta() + "<br>";
+            msg += "<img class='carta' src='"+this.mano[i].mostrarCarta()+"'>";
         }
         return msg;
     }
@@ -224,15 +226,27 @@ class Croupier{
     eliminarMano(){
         this.mano = [];
     }
+    
+    getMano(){
+        return this.mano;
+    }
+
+    modificarValorAs(){
+        for(let i = 0; i < this.mano.length; i++){
+            if(this.mano[i].mostrarValor() == 11){
+                this.mano[i].valor = 1;
+            }
+        }
+    }
 
     recibirCarta(carta){
         this.mano.push(carta);
     }
 
     mostrarMano(){
-        let msg = "Mano del croupier: <br>";
+        let msg = "";
         for(let i = 0; i < this.mano.length; i++){
-            msg += this.mano[i].mostrarCarta() + "<br>";
+            msg += "<img class='carta' src='"+this.mano[i].mostrarCarta()+"'>";
         }
         return msg;
 }
@@ -247,10 +261,63 @@ class Croupier{
         return suma;
     }
 }
+/*
+class Partida{
+    constructor(jugador, croupier, mazo){
+        this.mazo = mazo;
+        this.jugador = jugador;
+        this.croupier = croupier;
+        this.ganador = "";
+        this.resultado = "";
+    }
 
+    iniciarPartida(){
+        if(jugador.saldo >= apuesta && apuesta > 0){
+            manoC.innerHTML = "";
+            manoJ.innerHTML = "";
+            jugador.apostar(apuesta);
+            saldo.innerHTML = jugador.mostrarSaldo();
+            jugador.recibirCarta(mazo.sacarCarta());
+            croupier.recibirCarta(mazo.sacarCarta());
+            jugador.recibirCarta(mazo.sacarCarta());
+            manoC.innerHTML = croupier.mostrarMano()+ '<img class="carta" src="img/BACK.png">';
+            croupier.recibirCarta(mazo.sacarCarta());
+            valorManoC.innerHTML = croupier.sumarValorMano();
+            manoJ.innerHTML = jugador.mostrarMano();
+            valorManoJ.innerHTML = jugador.sumarValorMano();
+            
+            result.innerHTML = "Desea otra carta?";
+            yesButton.style.display = 'inline-block';
+            noButton.style.display = 'inline-block';
+        }else{
+            
+            result.innerHTML = "No tiene saldo suficiente para apostar";
+            jugarButton.style.display = 'block';
+            raiseBetButton.style.display = 'inline-block';
+            lowBetButton.style.display = 'inline-block';
+            if(apuesta==0){
+                result.innerHTML="No ha apostado";
+            }
+    
+        }
+        this.jugador.eliminarMano();
+        this.croupier.eliminarMano();
+        this.jugador.mano.push(mazo.sacarCarta());
+        this.croupier.mano.push(mazo.sacarCarta());
+        this.jugador.mano.push(mazo.sacarCarta());
+        this.croupier.mano.push(mazo.sacarCarta());
+        jugarButton.style.display = 'none';
+        raiseBetButton.style.display = 'none';
+        lowBetButton.style.display = 'none';
+        
+    }
 
+    mostrarManos(){
+        
+    }
+}
+*/
 function repartir(){
-    console.log(mazo.mostrarMazo());
     result.style.color = 'black';
     
     if(manosJugadas > 6){
@@ -274,8 +341,10 @@ function repartir(){
         jugador.recibirCarta(mazo.sacarCarta());
         jugador.recibirCarta(mazo.sacarCarta());
 
-        manoC.innerHTML = croupier.mostrarMano()+ 'el valor de la mano es: ' + croupier.sumarValorMano();
-        manoJ.innerHTML = jugador.mostrarMano() + ' el valor de la mano es: ' + jugador.sumarValorMano();
+        manoC.innerHTML = croupier.mostrarMano()+ '<img class="carta" src="img/BACK.png">';
+        valorManoC.innerHTML = croupier.sumarValorMano();
+        manoJ.innerHTML = jugador.mostrarMano();
+        valorManoJ.innerHTML = jugador.sumarValorMano();
         
         result.innerHTML = "Desea otra carta?";
         yesButton.style.display = 'inline-block';
@@ -296,20 +365,34 @@ function repartir(){
 function tirarCarta(){
     
     jugador.recibirCarta(mazo.sacarCarta());
-    manoJ.innerHTML = jugador.mostrarMano()+ 'el valor de la mano es: ' + jugador.sumarValorMano();
+    manoJ.innerHTML = jugador.mostrarMano();
+    valorManoJ.innerHTML = jugador.sumarValorMano();
     result.innerHTML = "Desea otra carta?";
     yesButton.style.display = 'inline-block';
     noButton.style.display = 'inline-block';
     
     if(jugador.sumarValorMano() > 21){
-        result.innerHTML = 'Has superado los 21, perdiste con una mano de: ' + jugador.sumarValorMano();
-        result.style.color = 'red';
-        jugarButton.style.display = 'block';
-        raiseBetButton.style.display = 'inline-block';
-        lowBetButton.style.display = 'inline-block';
-        yesButton.style.display = 'none';
-        noButton.style.display = 'none';
+        let contieneAs = false;
+        for(let i = 0; i < jugador.mano.length; i++){
+            if(jugador.mano[i].mostrarValor() == 11){
+                contieneAs = true;
+                jugador.mano[i].valor = 1;
+                valorManoJ.innerHTML = jugador.sumarValorMano();
+            }
+        }
+        if(contieneAs == false){
+
+            result.innerHTML = 'Has superado los 21, perdiste con una mano de: ' + jugador.sumarValorMano();
+            result.style.color = 'red';
+            jugarButton.style.display = 'block';
+            raiseBetButton.style.display = 'inline-block';
+            lowBetButton.style.display = 'inline-block';
+            yesButton.style.display = 'none';
+            noButton.style.display = 'none';
+        }
+
     }
+    
 }
 
 function jugarCroupier(){
@@ -317,7 +400,8 @@ function jugarCroupier(){
     noButton.style.display = 'none';
     while(croupier.sumarValorMano() < 17){
         croupier.recibirCarta(mazo.sacarCarta());
-        manoC.innerHTML = croupier.mostrarMano()+ 'el valor de la mano es: ' + croupier.sumarValorMano();
+        manoC.innerHTML = croupier.mostrarMano();
+        valorManoC.innerHTML = croupier.sumarValorMano();
         
         jugarButton.style.display = 'block';
         raiseBetButton.style.display = 'inline-block';
@@ -382,18 +466,22 @@ function subirApuesta(){
 let manosJugadas = 0;
 let mazo = new Mazo();
 mazo.barajarMazo();
-let jugador = new Jugador('Julito');
-let croupier = new Croupier();
-let manoC = document.getElementById('manoC');
-let manoJ = document.getElementById('manoJ');
-let result = document.getElementById('result');
-let saldo = document.getElementById('saldo');
-let yesButton = document.getElementById('yesButton');
-let noButton = document.getElementById('noButton');
-let jugarButton = document.getElementById('jugar');
+const jugador = new Jugador('Julito');
+const croupier = new Croupier();
+const manoC = document.getElementById('manoC');
+const manoJ = document.getElementById('manoJ');
+const result = document.getElementById('result');
+const saldo = document.getElementById('saldo');
+const yesButton = document.getElementById('yesButton');
+const noButton = document.getElementById('noButton');
+const jugarButton = document.getElementById('jugar');
 saldo.innerHTML = jugador.mostrarSaldo();
-let showBet = document.getElementById('bet');
+const showBet = document.getElementById('bet');
 let apuesta = 100;
-let raiseBetButton = document.getElementById('raiseBet');
-let lowBetButton = document.getElementById('lowBet');
+const raiseBetButton = document.getElementById('raiseBet');
+const lowBetButton = document.getElementById('lowBet');
 showBet.innerHTML = "apuesta: " + apuesta;
+const nombreJugador = document.getElementById('nombreJugador');
+nombreJugador.innerHTML = jugador.nombre;
+let valorManoJ = document.getElementById('valorJ');
+let valorManoC = document.getElementById('valorC');

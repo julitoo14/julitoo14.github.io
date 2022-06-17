@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/global.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="navbar">
+                <li class="nav-link"><a href="index.html">Home</a></li>
+                <li class="nav-link"><a href="blackjack.html">Blackjack</a></li>
+                <li class="nav-link"><a href="generala.html">Generala</a></li>
+                <li class="nav-link"><a href="">Mi cuenta</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="tablero">
+            <h1>Bienvenido al Blackjack</h1>
+            <h2>Croupier:</h2>
+            <p id="manoC" class="mano"></p>
+            <p id="valorC"></p>
+            <h2 id="nombreJugador"></h2>
+            <p id="manoJ" class="mano"></p>
+            <p id="valorJ"></p>
+            <p id="result"></p>
+            <button id="jugar" onclick="repartir()">Jugar</button>
+            <div>
+                <button id="lowBet" onclick="bajarApuesta()">-</button>
+                <button id="raiseBet" onclick="subirApuesta()">+</button>
+            </div>
+            <div>
+                <button id="yesButton" onclick="tirarCarta()">Si</button>
+                <button id="noButton" onclick="jugarCroupier()">No</button>
+            </div>
+            <p id="bet"></p>
+            <p id="saldo"></p>
+        </div>
+    </main>
+</body>
+</html>
+<script src="js/Blackjack.js"></script>
