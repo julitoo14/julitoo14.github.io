@@ -28,14 +28,14 @@
             <p id="manoJ" class="mano"></p>
             <p id="valorJ"></p>
             <p id="result"></p>
-            <button id="jugar" onclick="repartir()">Jugar</button>
+            <button id="jugar" onclick="partida.jugar()">Jugar</button>
             <div>
-                <button id="lowBet" onclick="bajarApuesta()">-</button>
-                <button id="raiseBet" onclick="subirApuesta()">+</button>
+                <button id="lowBet" onclick="partida.bajarApuesta()">-</button>
+                <button id="raiseBet" onclick="partida.subirApuesta()">+</button>
             </div>
             <div>
-                <button id="yesButton" onclick="tirarCarta()">Si</button>
-                <button id="noButton" onclick="jugarCroupier()">No</button>
+                <button id="yesButton" onclick="partida.hit()">Hit</button>
+                <button id="noButton" onclick="partida.fold()">Fold</button>
             </div>
             <p id="bet"></p>
             <p id="saldo"></p>
