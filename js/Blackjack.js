@@ -205,7 +205,7 @@ class Jugador{
     mostrarMano(){
         let msg = "";
         for(let i = 0; i < this.mano.length; i++){
-            msg += "<img class='carta' src='"+this.mano[i].mostrarCarta()+"'>";
+            msg += `<img class='carta' src='${this.mano[i].mostrarCarta()}'>`;
         }
         return msg;
     }
@@ -306,6 +306,7 @@ class Partida{
         this.raiseBetButton = document.getElementById('raiseBet');
         this.lowBetButton = document.getElementById('lowBet');
         this.nombreJugador = document.getElementById('nombreJugador');
+        this.nombreCroupier = document.getElementById('nombreCroupier');
     }
 
     prepararPartida(){
@@ -322,7 +323,8 @@ class Partida{
         this.showBet.innerHTML = "apuesta: " + this.apuesta;
         this.raiseBetButton.style.display = "inline-block";
         this.lowBetButton.style.display = "inline-block";
-        this.nombreJugador.innerHTML = jugador.nombre + ": ";
+        this.nombreJugador.innerHTML = jugador.nombre;
+        this.nombreCroupier.innerHTML = "Croupier";
     }
 
     jugar(){
@@ -332,6 +334,8 @@ class Partida{
         this.jugarButton.style.display = "none";
         this.raiseBetButton.style.display = "none";
         this.lowBetButton.style.display = "none";
+        this.nombreJugador.style.display = "block";
+        this.nombreCroupier.style.display = "block";
 
         //se cuentan las manos para renovar el mazo si es necesario
         this.manosJugadas++;
@@ -355,7 +359,6 @@ class Partida{
             croupier.recibirCarta(this.mazo.sacarCarta());
             this.manoJ.innerHTML = jugador.mostrarMano();
             this.valorManoJ.innerHTML = jugador.sumarValorMano();
-            console.log(croupier.mostrarMano());
 
             
             this.result.innerHTML = "Desea otra carta?";
@@ -363,6 +366,7 @@ class Partida{
             this.noButton.style.display = 'inline-block';
         }else{
             this.result.innerHTML = "No tiene saldo suficiente para apostar";
+            this.jugarButton.display = "block";
             if(this.apuesta==0){
                 this.result.innerHTML="No ha apostado";
             }
@@ -377,7 +381,7 @@ class Partida{
         this.manoJ.innerHTML = jugador.mostrarMano();
         this.valorManoJ.innerHTML = jugador.sumarValorMano();
         if(jugador.sumarValorMano() > 21){ // si el jugador se paso se muestra el mensaje y aparecen los botones para volver a jugar
-            this.result.innerHTML = "Busted";
+            this.result.innerHTML = `Te pasaste con ${jugador.sumarValorMano()}`;
             this.yesButton.style.display = 'none';
             this.noButton.style.display = 'none';
             this.jugarButton.style.display = 'block';
@@ -412,8 +416,8 @@ class Partida{
     getGanador(){ // metodo para determinar el ganador
         
         if(jugador.sumarValorMano() == 21 && jugador.getMano().length == 2){ //si el jugador tiene blackjack se gana automaticamente
-            this.result.innerHTML = "Blackjack! Ganaste "+ this.apuesta*2.5;
-            ganancia = this.apuesta *2.5;
+            this.result.innerHTML = `Blackjack! Ganaste ${this.apuesta*2.5}`;
+            jugador.ganar(this.apuesta *2.5);
         }else if(jugador.sumarValorMano() > 21){ //si el jugador se paso
             this.result.innerHTML = "Te pasaste";
             this.ganador = croupier;
@@ -422,7 +426,7 @@ class Partida{
             this.ganador = jugador;
             jugador.ganar(this.apuesta*2);
         }else if(jugador.sumarValorMano() > croupier.sumarValorMano()){ //si el jugador tiene mas puntos que el croupier
-            this.result.innerHTML = "Ganaste"+ this.apuesta*2;
+            this.result.innerHTML = "Ganaste "+ this.apuesta*2;
             this.ganador = jugador;
             jugador.ganar(this.apuesta*2);
         }else if(jugador.sumarValorMano() < croupier.sumarValorMano()){ //si el croupier tiene mas puntos que el jugador
@@ -460,3 +464,4 @@ const jugador = new Jugador('Julito');
 const croupier = new Croupier();
 const partida = new Partida(jugador, croupier);
 partida.prepararPartida();
+console.log();

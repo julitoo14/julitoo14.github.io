@@ -12,6 +12,34 @@ body{
     margin: 1em;
 }
 
+.bj-button{
+    background-color: green;
+    border-radius: 5px;
+    height: 3em;
+    width: 5em;
+}
+
+.cartas > div{
+    border: black solid 3px ;
+    padding: 1em;
+}
+
+.red{
+    background-color: red;
+}
+
+.green{
+    background-color: green;
+}
+
+#nombreCroupier{
+    display: none;
+}
+
+#nombreJugador{
+    display: none;
+}
+
 .mano{
     display:flex;
     flex-direction: row;
@@ -27,19 +55,20 @@ body{
     display: none;
     margin: 1em;
 }
-main{
+body{
     text-align: center;
+    background-image: url("../img/fondo.jpeg");
+    color: white;
 }
 
-.tablero{
-    background-color: rgb(67, 194, 67);
+.cartas{
     width: 100%;
     margin: auto;
-    height: 100vh;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
+    margin-top: 2em;
 }
 
 .saldo-container{

@@ -28,16 +28,23 @@ class Jugador{
     }
 }
 
-class Reglas{
-    constructor(){
-        this.reglas = [];
+class Partida {
+    constructor(jugador1, jugador2){
+        this.jugador1 = jugador1;
+        this.jugador2 = jugador2;
+        this.dado1 = new Dado(6);
+        this.dado2 = new Dado(6);
+        this.dado3 = new Dado(6);
+        this.dado4 = new Dado(6);
+        this.dado5 = new Dado(6);
+        this.jugadorActual = this.jugador1;
     }
 
-    agregarRegla(regla){
-        this.reglas.push(regla);
-    }
-
-    getReglas(){
-        return this.reglas;
+    comenzarTurno(){
+        this.dado1.tirar();
+        this.dado2.tirar();
+        this.dado3.tirar();
+        this.dado4.tirar();
+        this.dado5.tirar();
     }
 }

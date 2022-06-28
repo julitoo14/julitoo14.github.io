@@ -19,27 +19,30 @@
         </nav>
     </header>
     <main>
-        <div class="tablero">
-            <h1>Bienvenido al Blackjack</h1>
-            <h2>Croupier:</h2>
-            <p id="manoC" class="mano"></p>
-            <p id="valorC"></p>
-            <h2 id="nombreJugador"></h2>
-            <p id="manoJ" class="mano"></p>
-            <p id="valorJ"></p>
-            <p id="result"></p>
-            <button id="jugar" onclick="partida.jugar()">Jugar</button>
+        <div class="cartas">
             <div>
-                <button id="lowBet" onclick="partida.bajarApuesta()">-</button>
-                <button id="raiseBet" onclick="partida.subirApuesta()">+</button>
+                <h2 id="nombreJugador"></h2>
+                <p id="manoJ" class="mano"></p>
+                <p id="valorJ"></p>
             </div>
             <div>
-                <button id="yesButton" onclick="partida.hit()">Hit</button>
-                <button id="noButton" onclick="partida.fold()">Fold</button>
+                <h2 id="nombreCroupier"></h2>
+                <p id="manoC" class="mano"></p>
+                <p id="valorC"></p>
             </div>
-            <p id="bet"></p>
-            <p id="saldo"></p>
         </div>
+        <p id="result"></p>
+        <button id="jugar" onclick="partida.jugar()">Jugar</button>
+        <div>
+            <button id="lowBet" class="bj-button"onclick="partida.bajarApuesta()">-</button>
+            <button id="raiseBet" class="bj-button"onclick="partida.subirApuesta()">+</button>
+        </div>
+        <div>
+            <button id="yesButton" class="green bj-button"onclick="partida.hit()">Hit</button>
+            <button id="noButton" class="red bj-button"onclick="partida.fold()">Fold</button>
+        </div>
+        <p id="bet"></p>
+        <p id="saldo"></p>
     </main>
 </body>
 </html>
