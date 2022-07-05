@@ -31,19 +31,19 @@
                 <p id="valorC"></p>
             </div>
         </div>
+        <div>
+            <button id="lowBet" class="bj-button red">-</button>
+            <button id="raiseBet" class="bj-button green">+</button>
+        </div>
+        <button id="jugar" class="bj-button green jugar" >Jugar</button>
+        <div>
+            <button id="yesButton" class="green bj-button">Hit</button>
+            <button id="noButton" class="red bj-button">Fold</button>
+        </div>
         <p id="result"></p>
-        <button id="jugar" onclick="partida.jugar()">Jugar</button>
-        <div>
-            <button id="lowBet" class="bj-button"onclick="partida.bajarApuesta()">-</button>
-            <button id="raiseBet" class="bj-button"onclick="partida.subirApuesta()">+</button>
-        </div>
-        <div>
-            <button id="yesButton" class="green bj-button"onclick="partida.hit()">Hit</button>
-            <button id="noButton" class="red bj-button"onclick="partida.fold()">Fold</button>
-        </div>
         <p id="bet"></p>
         <p id="saldo"></p>
     </main>
 </body>
 </html>
-<script src="js/Blackjack.js"></script>
+<script type="module" src="js/blackjack/Partida.js"></script>

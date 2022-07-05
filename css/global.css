@@ -17,6 +17,11 @@ body{
     border-radius: 5px;
     height: 3em;
     width: 5em;
+    margin: 1em;
+}
+
+.jugar{
+    width: 12em;
 }
 
 .cartas > div{
@@ -28,8 +33,20 @@ body{
     background-color: red;
 }
 
+.red:hover{
+    background-color: darkred;
+    cursor: pointer;
+}
+
 .green{
     background-color: green;
+    
+}
+
+.green:hover{
+    background-color: darkgreen;
+    cursor: pointer;
+
 }
 
 #nombreCroupier{
