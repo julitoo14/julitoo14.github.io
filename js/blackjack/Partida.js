@@ -4,6 +4,7 @@ import {Mazo} from './Mazo.js';
 
 class Partida{
     constructor(jugador, croupier){
+        this.pj = JSON.parse(localStorage.getItem("usuariosLogueados"));
         this.mazo = new Mazo();
         this.mazo.barajarMazo();
         this.jugador = jugador;
@@ -59,6 +60,7 @@ class Partida{
         //se cuentan las manos para renovar el mazo si es necesario
         this.manosJugadas++;
         if(this.manosJugadas > 5){
+                this.mazo = new Mazo();
                 this.mazo.barajarMazo();
                 this.manosJugadas = 0;
                 
@@ -92,7 +94,10 @@ class Partida{
         }
     }
         
-    
+    actualizarSaldo(){
+        pj.saldo = jugador.saldo;
+        localStorage.setItem("usuariosLogueados", JSON.stringify(pj));
+    }
 
 
     hit(){ //metodo para recibir carta, se llama desde el boton "hit"
@@ -179,13 +184,23 @@ class Partida{
 
 }
 
-const jugador = new Jugador('Julito');
+const closeButton = document.getElementById('cerrarSesion');
+const pj =JSON.parse(localStorage.getItem("usuariosLogueados"));
+const jugador = new Jugador(pj.name, pj.saldo);
 const croupier = new Croupier();
 const partida = new Partida(jugador, croupier);
+const saludo = document.getElementById("saludo");
+saludo.innerHTML = `Bienvenido ${pj.name}`;
 partida.prepararPartida();
 partida.jugarButton.addEventListener("click", function jugarButton(){partida.jugar();});
 partida.yesButton.addEventListener("click", function hitButton(){partida.hit();});
 partida.noButton.addEventListener("click", function foldButton(){partida.fold();});
 partida.raiseBetButton.addEventListener("click", function raiseBetButton(){partida.subirApuesta();});
 partida.lowBetButton.addEventListener("click", function lowBetButton(){partida.bajarApuesta();});
+closeButton.addEventListener('click', function(){
+    partida.actualizarSaldo();
+    const usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    usuarios.push(JSON.parse(localStorage.getItem("usuariosLogueados")));
+    
+});
 

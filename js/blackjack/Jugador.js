@@ -1,8 +1,8 @@
 export class Jugador{
-    constructor(nombre){
+    constructor(nombre, saldo){
         this.nombre = nombre;
         this.mano = [];
-        this.saldo = 10000;
+        this.saldo = saldo;
     }
 
     getNombre(){

@@ -3,6 +3,42 @@ body{
     padding: 0;
 }
 
+.registroLogin-form{
+    background-color: azure;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+    margin: auto;
+    margin-top: 4em;
+    color: black;
+    padding: 1em;
+}
+
+.registroLogin-form input{
+    width: 60%;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    border: 1px solid black;
+    margin: auto;
+    margin-bottom: 2em;
+}
+
+.registroLoginButton{
+    background-color:green;
+    color: white;
+    padding: 1em;
+    border-radius: 5px;
+    width: 60%;
+    margin: auto;
+
+}
+
+.registroLoginButton:hover{
+    background-color:darkgreen;
+    cursor: pointer;
+}
+
 #jugar{
     margin: auto;
 }
