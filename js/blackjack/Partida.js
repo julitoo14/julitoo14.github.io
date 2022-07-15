@@ -96,7 +96,15 @@ class Partida{
         
     actualizarSaldo(){
         pj.saldo = jugador.saldo;
+        const usuarios = JSON.parse(localStorage.getItem("usuarios"));
+        for (const usuario of usuarios){
+            if(pj.name === usuario.name){
+                usuario.saldo = jugador.saldo;
+            }
+        }
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
         localStorage.setItem("usuariosLogueados", JSON.stringify(pj));
+        
     }
 
 
@@ -111,6 +119,7 @@ class Partida{
             this.jugarButton.style.display = 'block';
             this.raiseBetButton.style.display = 'inline-block';
             this.lowBetButton.style.display = 'inline-block';
+            this.actualizarSaldo();
         }else{
             this.result.innerHTML = "Desea otra carta?";
         }
@@ -162,6 +171,7 @@ class Partida{
         }
         
         this.saldo.innerHTML = jugador.mostrarSaldo();
+        this.actualizarSaldo();
     }
 
     subirApuesta(){ //metodo para subir la apuesta
@@ -201,6 +211,7 @@ closeButton.addEventListener('click', function(){
     partida.actualizarSaldo();
     const usuarios = JSON.parse(localStorage.getItem("usuarios"));
     usuarios.push(JSON.parse(localStorage.getItem("usuariosLogueados")));
-    
+    localStorage.removeItem("usuariosLogueados");
+    window.location.replace('./index.html');
 });
 
